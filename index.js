@@ -19,7 +19,11 @@ client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
 
-  
+client.on('message', async message =>{
+    if (message.content === `${PREFIX}${JokeID}`|| `${PREFIX}${rankID}`){
+        message.react('❤️')
+    }
+})
 
 client.on('message', async message =>{
     if (!message.guild) return;
