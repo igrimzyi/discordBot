@@ -5,6 +5,7 @@ const levels = require('discord-xp');
 
 
 
+
 levels.setURL("mongodb+srv://bot:puWZ87TdL5FtBhDJ@cluster0.pm1sa.mongodb.net/Cluster0?retryWrites=true&w=majority")
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -13,9 +14,12 @@ const PREFIX = ("$");
 const JokeID = ("joke");
 const rankID = ("rank");
 
+
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
+
+  
 
 client.on('message', async message =>{
     if (!message.guild) return;
