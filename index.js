@@ -7,10 +7,7 @@ const token = process.env.TOKEN;
 
 
 
-
-
-
-// levels.setURL("mongodb+srv://bot:puWZ87TdL5FtBhDJ@cluster0.pm1sa.mongodb.net/Cluster0?retryWrites=true&w=majority")
+levels.setURL(process.env.MONGOURI)
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 const PREFIX = ("$");
@@ -28,22 +25,22 @@ client.on('message', async messageCreate =>{
     }
 })
 
-// client.on('message', async message =>{
-//     if (!message.guild) return;
-//     if (message.author.bot) return;
+client.on('message', async messageCreate =>{
+    if (!messageCreate.guild) return;
+    if (messageCreate.author.bot) return;
 
-//     const randomXp = Math.floor(Math.random()* 9)+ 1 ;
+    const randomXp = Math.floor(Math.random()* 9)+ 1 ;
 
-//     const hasLeveledUp = await levels.appendXp(message.author.id, message.guild.id, randomXp);
-//     if (hasLeveledUp){
-//         const user = await levels.fetch(message.author.id, message.guild.id);
-//         message.channel.send(`You leveled up to ${user.level}! Keep it going!`);
-//     }
-//     if (message.content === `${PREFIX}${rankID}`){
-//         const user = await levels.fetch(message.author.id, message.guild.id);
-//         message.channel.send(`You are currently level **${user.level}**!`)
-//     }
-// })
+    const hasLeveledUp = await levels.appendXp(messageCreate.author.id, messageCreate.guild.id, randomXp);
+    if (hasLeveledUp){
+        const user = await levels.fetch(messageCreate.author.id, messageCreate.guild.id);
+        messageCreate.channel.send(`You leveled up to ${user.level}! Keep it going!`);
+    }
+    if (messageCreate.content === `${PREFIX}${rankID}`){
+        const user = await levels.fetch(messageCreate.author.id, messageCreate.guild.id);
+        messageCreate.channel.send(`You are currently level **${user.level}**!`)
+    }
+})
 
 client.on('message' , async messageCreate =>{
     if (messageCreate.content === `${PREFIX}${JokeID}`) {
