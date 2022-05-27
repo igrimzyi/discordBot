@@ -1,1 +1,0 @@
-Worker: node ./discordBot/discordBot/index.js
