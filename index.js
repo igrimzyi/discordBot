@@ -1,6 +1,10 @@
 const { Client, Intents } = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
+require('dotenv').config();
+
+const token = process.env.TOKEN;
+
 
 
 
@@ -9,7 +13,6 @@ const levels = require('discord-xp');
 levels.setURL("mongodb+srv://bot:puWZ87TdL5FtBhDJ@cluster0.pm1sa.mongodb.net/Cluster0?retryWrites=true&w=majority")
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const token = 'OTA4ODU5ODUyOTMwMDM5ODI5.YY73sg.D_7WTD3sXKKCa_vUEb4usCbtm6s';
 const PREFIX = ("$");
 const JokeID = ("joke");
 const rankID = ("rank");
