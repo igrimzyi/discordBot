@@ -1,6 +1,6 @@
 // Setting env variables
 const express = require('express')
-const app = express()
+const app = express();
 const { Client, Intents } = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
@@ -19,7 +19,7 @@ client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
 })
 
-// ranks
+//react 
 client.on('messageCreate', async messageCreate =>{
     if (messageCreate.content.substring(0,1)=== '$' ){
         messageCreate.react("\u2764")
@@ -51,18 +51,27 @@ client.on('messageCreate' , async messageCreate =>{
     });
 }
 })
-client.on('messageCreate', async messageCreate =>{  
+
+//dog images
+client.on('messageCreate',  messageCreate =>{  
+  
     
     if(messageCreate.content === `${PREFIX}doge`){
         
-        app.get('https://dog.ceo/api/breed/shiba/images/random', (req,res)=>{
-            console.log('hello')
-         })
-
         // messageCreate.channel.send("Here is me!", {files: ["https://dog.ceo/api/breed/Shiba/images/random"] });
     }
 
 })
+app.get('https://dog.ceo/api/breed/shiba/images/random',(req,res)=>{
+        try{   
+            console.log('hello')
+        }catch(err){
+            console.log(err)
+        }
+   
+         })
+
+
 
 
 

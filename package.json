@@ -7,7 +7,8 @@
     "express": "^4.18.1",
     "give-me-a-joke": "^0.5.1",
     "mongoose": "^6.0.13",
-    "node-fetch": "^3.1.0"
+    "node-fetch": "^3.1.0",
+    "undici": "^5.3.0"
   },
   "name": "discordbot",
   "description": "--DogeBot-- Discord bot coded with JavaScript in order to run SFW task such as sending jokes and etc.... --Tools-- NodeJS MongoDB Heroku  --Features-- -->React to messages that are defined with its prefix with a heart.  -->Responds to \"$joke\" messages with a node module contained with many dad jokes.  -->Keeps the rank of every discord user within the server by a leveling system that corresponds by the amount of times every specific user sends a message within a server channel and responds to \"$rank\" with the current rank of the user, using mongoDB.",
