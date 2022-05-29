@@ -1,6 +1,7 @@
 // Setting env variables
 const express = require('express')
 const app = express();
+const { request, fetch } = require('undici');
 const { Client, Intents } = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
@@ -53,26 +54,30 @@ client.on('messageCreate' , async messageCreate =>{
 })
 
 //dog images
-client.on('messageCreate',  messageCreate =>{  
+client.on('messageCreate', async messageCreate =>{  
   
+    async function getJSONResponse(body) {
+        let fullBody = '';
+    
+        for await (const data of body) {
+            fullBody += data.toString();
+        }
+    
+        return JSON.parse(fullBody);
+    }
     
     if(messageCreate.content === `${PREFIX}doge`){
+
+        const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
         
+        console.log(dogeResult)
+        // const catResult = await request('https://aws.random.cat/meow');
+        // const { file } = await getJSONResponse(dogeResult.body);
+		// interaction.editReply({ files: [file] });
         // messageCreate.channel.send("Here is me!", {files: ["https://dog.ceo/api/breed/Shiba/images/random"] });
     }
 
 })
-app.get('https://dog.ceo/api/breed/shiba/images/random',(req,res)=>{
-        try{   
-            console.log('hello')
-        }catch(err){
-            console.log(err)
-        }
-   
-         })
-
-
-
 
 
 client.login(token)
