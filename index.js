@@ -54,30 +54,30 @@ client.on('messageCreate' , async messageCreate =>{
 })
 
 //dog images
-client.on('messageCreate', async messageCreate =>{  
+// client.on('messageCreate', async messageCreate =>{  
   
-    async function getJSONResponse(body) {
-        let fullBody = '';
+//     async function getJSONResponse(body) {
+//         let fullBody = '';
     
-        for await (const data of body) {
-            fullBody += data.toString();
-        }
+//         for await (const data of body) {
+//             fullBody += data.toString();
+//         }
     
-        return JSON.parse(fullBody);
-    }
+//         return JSON.parse(fullBody);
+//     }
     
-    if(messageCreate.content === `${PREFIX}doge`){
+//     if(messageCreate.content === `${PREFIX}doge`){
 
-        const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
+//         const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
         
-        console.log(dogeResult)
-        // const catResult = await request('https://aws.random.cat/meow');
-        // const { file } = await getJSONResponse(dogeResult.body);
-		// interaction.editReply({ files: [file] });
-        // messageCreate.channel.send("Here is me!", {files: ["https://dog.ceo/api/breed/Shiba/images/random"] });
-    }
+//         console.log(dogeResult)
+//         // const catResult = await request('https://aws.random.cat/meow');
+//         // const { file } = await getJSONResponse(dogeResult.body);
+// 		// interaction.editReply({ files: [file] });
+//         // messageCreate.channel.send("Here is me!", {files: ["https://dog.ceo/api/breed/Shiba/images/random"] });
+//     }
 
-})
+// })
 
 
 client.login(token)
