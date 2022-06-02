@@ -76,7 +76,7 @@ client.on('messageCreate', async messageCreate =>{
             trailers,
             body
         } = await request('https://dog.ceo/api/breed/shiba/images/random')
-        
+
           console.log(body)
 
         const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
@@ -92,6 +92,8 @@ client.on('messageCreate', async messageCreate =>{
 
 
 client.login(token)
+
+
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
   })
