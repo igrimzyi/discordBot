@@ -65,8 +65,19 @@ client.on('messageCreate', async messageCreate =>{
     
         return JSON.parse(fullBody);
     }
+     
     
+
     if(messageCreate.content === `${PREFIX}doge`){
+
+        const {
+            statusCode,
+            headers,
+            trailers,
+            body
+        } = await request('https://dog.ceo/api/breed/shiba/images/random')
+        
+          console.log(body)
 
         const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
         
