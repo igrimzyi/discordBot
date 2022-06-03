@@ -9,10 +9,12 @@ require('dotenv').config();
 const token = process.env.TOKEN;
 levels.setURL(process.env.MONGOURI)
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
-const PREFIX = ("$");
-const JokeID = ("joke");
-const rankID = ("rank");
+const PREFIX = "$";
+const JokeID = "joke";
+const rankID = "rank";
+const images = "images"; 
 const port = 3000;
+
 
 
 // functions
@@ -21,7 +23,7 @@ client.on("ready", () => {
 })
 
 //react 
-client.on('messageCreate', async messageCreate =>{
+client.on('messageCreate', async messageCreate =>{ 
     if (messageCreate.content.substring(0,1)=== '$' ){
         messageCreate.react("\u2764")
     }
@@ -29,7 +31,12 @@ client.on('messageCreate', async messageCreate =>{
 
 // levels 
 client.on('messageCreate', async messageCreate =>{
+    if (messageCreate.content.substring(0,1) != '$' ){
+        return; 
+    }
+
     if (!messageCreate.guild) return;
+
     if (messageCreate.author.bot) return;
 
     const randomXp = Math.floor(Math.random()* 9)+ 1 ;
@@ -46,6 +53,9 @@ client.on('messageCreate', async messageCreate =>{
 })
 // random joke
 client.on('messageCreate' , async messageCreate =>{
+    if (messageCreate.content.substring(0,1) != '$' ){
+        return; 
+    }
     if (messageCreate.content === `${PREFIX}${JokeID}`) {
         giveMeAJoke.getRandomDadJoke (function(joke) {
       messageCreate.channel.send(joke);
@@ -55,15 +65,32 @@ client.on('messageCreate' , async messageCreate =>{
 
 //images commands 
 client.on('messageCreate', async messageCreate =>{  
-  
-    if(messageCreate.content === `${PREFIX}doge`){
-
+    if (messageCreate.content.substring(0,1) != '$' ){
+        return; 
+    }
+    if(messageCreate.content === `${PREFIX}${images} doge`){
         const {body} = await request('https://dog.ceo/api/breed/shiba/images/random')
 
         let response = await body.json();
-        messageCreate.channel.send("Here is me!");
+        messageCreate.channel.send("Here I am!");
         messageCreate.channel.send({ files: [{ attachment: response.message}] });
+    }else if(messageCreate.content.substring(0,7) === `${PREFIX}${images}`){
+        let imageName = messageCreate.content.substring(8, messageCreate.content.length)
+        const {body, statusCode} = await request(`https://dog.ceo/api/breed/${imageName}/images/random`); 
+        if(statusCode === 404){
+            messageCreate.channel.send("I was not able to find any images :(");
+        }else{
+            let response = await body.json();   
+            messageCreate.channel.send("Here is what you asked for!");
+            messageCreate.channel.send({ files: [{ attachment: response.message}] });
+        }
+        
+        // let response = await body.json();
+        // messageCreate.channel.send(`Heres's your ${imageName}!`);
+        // messageCreate.channel.send({ files: [{ attachment: response.message}] });
+
     }
+
 
 })
 
