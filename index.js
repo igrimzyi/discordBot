@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express();
 const { request, fetch } = require('undici');
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageActionRow, MessageAttachment } = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
 require('dotenv').config();
@@ -53,39 +53,16 @@ client.on('messageCreate' , async messageCreate =>{
 }
 })
 
-//dog images
+//images commands 
 client.on('messageCreate', async messageCreate =>{  
   
-    async function getJSONResponse(body) {
-        let fullBody = '';
-    
-        for await (const data of body) {
-            fullBody += data.toString();
-        }
-    
-        return JSON.parse(fullBody);
-    }
-     
-    
-
     if(messageCreate.content === `${PREFIX}doge`){
 
-        const {
-            statusCode,
-            headers,
-            trailers,
-            body
-        } = await request('https://dog.ceo/api/breed/shiba/images/random')
+        const {body} = await request('https://dog.ceo/api/breed/shiba/images/random')
 
-          console.log(body)
-
-        const dogeResult = await fetch('https://dog.ceo/api/breed/shiba/images/random')
-        
-        console.log(dogeResult)
-        // const catResult = await request('https://aws.random.cat/meow');
-        // const { file } = await getJSONResponse(dogeResult.body);
-		// interaction.editReply({ files: [file] });
-        // messageCreate.channel.send("Here is me!", {files: ["https://dog.ceo/api/breed/Shiba/images/random"] });
+        let response = await body.json();
+        messageCreate.channel.send("Here is me!");
+        messageCreate.channel.send({ files: [{ attachment: response.message}] });
     }
 
 })
