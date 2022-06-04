@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express();
 const { request, fetch } = require('undici');
-const { Client, Intents, MessageActionRow, MessageAttachment } = require('discord.js');
+const { Client, Intents } = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
 require('dotenv').config();
@@ -68,30 +68,45 @@ client.on('messageCreate', async messageCreate =>{
     if (messageCreate.content.substring(0,1) != '$' ){
         return; 
     }
+
     if(messageCreate.content === `${PREFIX}${images} doge`){
         const {body} = await request('https://dog.ceo/api/breed/shiba/images/random')
-
         let response = await body.json();
         messageCreate.channel.send("Here I am!");
         messageCreate.channel.send({ files: [{ attachment: response.message}] });
     }else if(messageCreate.content.substring(0,7) === `${PREFIX}${images}`){
-        let imageName = messageCreate.content.substring(8, messageCreate.content.length)
-        const {body, statusCode} = await request(`https://dog.ceo/api/breed/${imageName}/images/random`); 
-        if(statusCode === 404){
+   
+    if(messageCreate.content.includes("-")){
+       
+    }else if(messageCreate.content === `${PREFIX}${images} dog`){
+        const {body} = await request(`https://dog.ceo/api/breeds/image/random`)
+        let response = await body.json();   
+        messageCreate.channel.send("Here is what you asked for!");
+        messageCreate.channel.send({ files: [{ attachment: response.message}] });
+
+    }else{
+            let imageName = messageCreate.content.substring(8, messageCreate.content.length)
+            const {body, statusCode} = await request(`https://dog.ceo/api/breed/${imageName}/images/random`); 
+            
+            if(statusCode === 404){
             messageCreate.channel.send("I was not able to find any images :(");
-        }else{
-            let response = await body.json();   
-            messageCreate.channel.send("Here is what you asked for!");
-            messageCreate.channel.send({ files: [{ attachment: response.message}] });
-        }
+            }else{
+                let response = await body.json();   
+                messageCreate.channel.send("Here is what you asked for!");
+                messageCreate.channel.send({ files: [{ attachment: response.message}] });
+            }
+    }
         
         // let response = await body.json();
         // messageCreate.channel.send(`Heres's your ${imageName}!`);
         // messageCreate.channel.send({ files: [{ attachment: response.message}] });
 
     }
-
-
+})
+client.on('messageCreate', async messageCreate =>{  
+    if(messageCreate.content === `${PREFIX}help`){
+        messageCreate.channel.send("I was not able to find any images :(");
+    }
 })
 
 
