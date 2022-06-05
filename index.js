@@ -13,6 +13,7 @@ const PREFIX = "$";
 const JokeID = "joke";
 const rankID = "rank";
 const images = "images"; 
+const help = 'help';
 const port = 3000;
 
 
@@ -28,6 +29,7 @@ client.on('messageCreate', async messageCreate =>{
         messageCreate.react("\u2764")
     }
 })
+
 
 // levels 
 client.on('messageCreate', async messageCreate =>{
@@ -63,49 +65,50 @@ client.on('messageCreate' , async messageCreate =>{
 }
 })
 
+
+
 //images commands 
 client.on('messageCreate', async messageCreate =>{  
-    if (messageCreate.content.substring(0,1) != '$' ){
+    //return if the requirements are not initially met 
+
+    //implementation for doge images
+    if (messageCreate.content.substring(0,7) != '$images' ){
         return; 
     }
 
+    else if(messageCreate.content.substring(0,7) === `${PREFIX}${images}`){
+   
+    // if(messageCreate.content.includes("-")){
+    // }
+    
+    //images for random dog
     if(messageCreate.content === `${PREFIX}${images} doge`){
         const {body} = await request('https://dog.ceo/api/breed/shiba/images/random')
         let response = await body.json();
-        messageCreate.channel.send("Here I am!");
+        messageCreate.channel.send("Here I am!"); 
         messageCreate.channel.send({ files: [{ attachment: response.message}] });
-    }else if(messageCreate.content.substring(0,7) === `${PREFIX}${images}`){
-   
-    if(messageCreate.content.includes("-")){
-       
-    }else if(messageCreate.content === `${PREFIX}${images} dog`){
-        const {body} = await request(`https://dog.ceo/api/breeds/image/random`)
-        let response = await body.json();   
-        messageCreate.channel.send("Here is what you asked for!");
-        messageCreate.channel.send({ files: [{ attachment: response.message}] });
+    }
+    
+    else if(messageCreate.content === `${PREFIX}${images} dog`){
+            const {body} = await request(`https://dog.ceo/api/breeds/image/random`)
+            let response = await body.json();   
+            messageCreate.channel.send("Here is what you asked for!");
+            messageCreate.channel.send({ files: [{ attachment: response.message}] });
 
-    }else{
+        }
+    //images for any requested dog 
+    else{
             let imageName = messageCreate.content.substring(8, messageCreate.content.length)
             const {body, statusCode} = await request(`https://dog.ceo/api/breed/${imageName}/images/random`); 
             
             if(statusCode === 404){
-            messageCreate.channel.send("I was not able to find any images :(");
+                messageCreate.channel.send("I was not able to find any images :(");
             }else{
                 let response = await body.json();   
                 messageCreate.channel.send("Here is what you asked for!");
                 messageCreate.channel.send({ files: [{ attachment: response.message}] });
             }
     }
-        
-        // let response = await body.json();
-        // messageCreate.channel.send(`Heres's your ${imageName}!`);
-        // messageCreate.channel.send({ files: [{ attachment: response.message}] });
-
-    }
-})
-client.on('messageCreate', async messageCreate =>{  
-    if(messageCreate.content === `${PREFIX}help`){
-        messageCreate.channel.send("I was not able to find any images :(");
     }
 })
 
