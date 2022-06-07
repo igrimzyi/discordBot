@@ -78,8 +78,8 @@ client.on('messageCreate', async messageCreate =>{
 
     else if(messageCreate.content.substring(0,7) === `${PREFIX}${images}`){
    
-    // if(messageCreate.content.includes("-")){
-    // }
+    if(messageCreate.content.includes("-")){
+    }
     
     //images for random dog
     if(messageCreate.content === `${PREFIX}${images} doge`){
