@@ -53,6 +53,7 @@ client.on('messageCreate', async messageCreate =>{
         messageCreate.channel.send(`You are currently level **${user.level}**!`)
     }
 })
+
 // random joke
 client.on('messageCreate' , async messageCreate =>{
     if (messageCreate.content.substring(0,1) != '$' ){
@@ -112,6 +113,8 @@ client.on('messageCreate', async messageCreate =>{
     }
 })
 
+//stocks portion
+// api request  /v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}
 
 client.login(token)
 
