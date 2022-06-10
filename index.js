@@ -114,6 +114,9 @@ client.on('messageCreate', async messageCreate =>{
 })
 
 //stocks portion
+client.on('messageCreate', async messageCreate =>{  
+
+}
 // api request  /v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}
 
 client.login(token)
