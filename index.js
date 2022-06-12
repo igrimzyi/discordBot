@@ -7,8 +7,11 @@ let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
 require('dotenv').config();
 const token = process.env.TOKEN;
+const stockKey = process.env.stockkey; 
 levels.setURL(process.env.MONGOURI)
+
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+
 const PREFIX = "$";
 const JokeID = "joke";
 const rankID = "rank";
@@ -115,11 +118,19 @@ client.on('messageCreate', async messageCreate =>{
 
 client.on('messageCreate', async messageCreate =>{  
     if(messageCreate.content === `${PREFIX}stock`){
-        console.log('hello')
+
+        //gettng the exact stock 
+        const {body, statusCode} = await request(`https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2020-06-01/2020-06-17?apiKey=${stockKey}`);
+        console.log(statusCode);
+        console.log(body);
+        
     }
+
 })
 //stocks portion
-// api request   /v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}
+// example url of the stock option
+
+// https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2020-06-01/2020-06-17?apiKey=hvRjf6RR_sfG6OMCmyPY1a9zS8tTCzh_
 
 client.login(token)
 
