@@ -113,6 +113,11 @@ client.on('messageCreate', async messageCreate =>{
     }
 })
 
+client.on('messageCreate', async messageCreate =>{  
+    if(messageCreate.content === `${PREFIX}stock`){
+        console.log('hello')
+    }
+})
 //stocks portion
 // api request   /v2/aggs/ticker/{stocksTicker}/range/{multiplier}/{timespan}/{from}/{to}
 
