@@ -79,6 +79,21 @@ client.on('messageCreate', async messageCreate =>{
         RedditImageFetcher.fetch({
             type: 'meme'
         }).then(result => {
+            if(result[0].title){
+                messageCreate.channel.send(result[0].title)
+            }
+            messageCreate.channel.send({files:[{attachment:result[0].image}]})
+        });
+    }
+    else if(messageCreate.content === `${PREFIX}r/interesting`){
+        RedditImageFetcher.fetch({
+            type: 'custom',
+            subreddit:['interestingasfuck','satisfyingasfuck']
+        }).then(result => {
+            
+            if(result[0].title){
+                messageCreate.channel.send(result[0].title)
+            }
             messageCreate.channel.send({files:[{attachment:result[0].image}]})
         });
     }
