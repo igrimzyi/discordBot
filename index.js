@@ -7,7 +7,8 @@ let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
 require('dotenv').config();
 const token = process.env.TOKEN;
-const stockKey = process.env.stockkey; 
+// fetching images from reddit 
+const RedditImageFetcher = require("reddit-image-fetcher");
 levels.setURL(process.env.MONGOURI)
 
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
@@ -67,6 +68,21 @@ client.on('messageCreate' , async messageCreate =>{
       messageCreate.channel.send(joke);
     });
 }
+})
+//random meme 
+client.on('messageCreate', async messageCreate =>{
+    if(messageCreate.content.substring(0,1)!= '$'){
+        return; 
+    } 
+    
+    if(messageCreate.content === `${PREFIX}meme`){
+        RedditImageFetcher.fetch({
+            type: 'meme'
+        }).then(result => {
+            messageCreate.channel.send({files:[{attachment:result[0].image}]})
+        });
+    }
+
 })
 
 
