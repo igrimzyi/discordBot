@@ -95,10 +95,12 @@ client.on('messageCreate', async messageCreate =>{
             type: 'custom',
             subreddit:['satisfyingasfuck','interestingasfuck','satisfying']
         }).then(result => {
+            console.log(result)
             const message = new MessageEmbed()
             .setColor('#304281')
             .setTitle(result[0].title)
             .setImage(result[0].image)
+            .setDescription(`r/${result[0].subreddit}`)
             console.log(message)
             messageCreate.channel.send({embeds: [message]})
             // if(result[0].title){
