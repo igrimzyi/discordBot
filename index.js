@@ -2,7 +2,7 @@
 const express = require('express')
 const app = express();
 const { request, fetch } = require('undici');
-const { Client, Intents } = require('discord.js');
+const { Client, Intents, MessageEmbed} = require('discord.js');
 let giveMeAJoke = require('give-me-a-joke');
 const levels = require('discord-xp');
 require('dotenv').config();
@@ -29,7 +29,9 @@ client.on("ready", () => {
 
 //react 
 client.on('messageCreate', async messageCreate =>{ 
-    if (messageCreate.content.substring(0,1)=== '$' ){
+    if(messageCreate.content.substring(0,1) && messageCreate.content.length === 1 ){
+        return;
+    }else if (messageCreate.content.substring(0,1)=== '$' ){
         messageCreate.react("\u2764")
     }
 })
@@ -74,27 +76,35 @@ client.on('messageCreate', async messageCreate =>{
     if(messageCreate.content.substring(0,1)!= '$'){
         return; 
     } 
-    
+    //send memes :)
     if(messageCreate.content === `${PREFIX}meme`){
         RedditImageFetcher.fetch({
             type: 'meme'
         }).then(result => {
-            if(result[0].title){
-                messageCreate.channel.send(result[0].title)
-            }
-            messageCreate.channel.send({files:[{attachment:result[0].image}]})
+            const message = new MessageEmbed()
+            .setColor('#304281')
+            .setTitle(result[0].title)
+            .setImage(result[0].image)
+            console.log(message)
+            messageCreate.channel.send({embeds: [message]})
         });
     }
-    else if(messageCreate.content === `${PREFIX}r/interesting`){
+    //soooo satisfying
+    else if(messageCreate.content === `${PREFIX}interesting`){
         RedditImageFetcher.fetch({
             type: 'custom',
-            subreddit:['interestingasfuck','satisfyingasfuck']
+            subreddit:['satisfyingasfuck','interestingasfuck','satisfying']
         }).then(result => {
-            
-            if(result[0].title){
-                messageCreate.channel.send(result[0].title)
-            }
-            messageCreate.channel.send({files:[{attachment:result[0].image}]})
+            const message = new MessageEmbed()
+            .setColor('#304281')
+            .setTitle(result[0].title)
+            .setImage(result[0].image)
+            console.log(message)
+            messageCreate.channel.send({embeds: [message]})
+            // if(result[0].title){
+            //     messageCreate.channel.send(result[0].title)
+            // }
+            // messageCreate.channel.send({files:[{attachment:result[0].image}]})
         });
     }
 
