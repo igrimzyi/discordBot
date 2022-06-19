@@ -21,7 +21,6 @@ const help = 'help';
 const port = 3000;
 
 
-
 // functions
 client.on("ready", () => {
     console.log(`Logged in as ${client.user.tag}!`)
@@ -101,7 +100,7 @@ client.on('messageCreate', async messageCreate =>{
             .setTitle(result[0].title)
             .setImage(result[0].image)
             .setDescription(`r/${result[0].subreddit}`)
-            console.log(message)
+           
             messageCreate.channel.send({embeds: [message]})
         });
     }
@@ -128,6 +127,10 @@ client.on('messageCreate', async messageCreate =>{
     if(messageCreate.content === `${PREFIX}${images} doge`){
         const {body} = await request('https://dog.ceo/api/breed/shiba/images/random')
         let response = await body.json();
+        const message = new MessageEmbed()
+        .setColor('#304281')
+        .setTitle("Here I am!")
+        .setImage(response.image)
         messageCreate.channel.send("Here I am!"); 
         messageCreate.channel.send({ files: [{ attachment: response.message}] });
     }
@@ -155,22 +158,7 @@ client.on('messageCreate', async messageCreate =>{
     }
 })
 
-client.on('messageCreate', async messageCreate =>{  
-    if(messageCreate.content === `${PREFIX}stock`){
-
-        //gettng the exact stock 
-        const {body, statusCode} = await request(`https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2021-07-22/2021-07-22?adjusted=true&sort=asc&limit=120&apiKey=${stockKey}`);
-        console.log(body)   
-
-    }
-
-})
-//stocks portion
-// example url of the stock option
-
-// https://api.polygon.io/v2/aggs/ticker/AAPL/range/1/day/2020-06-01/2020-06-17?apiKey=hvRjf6RR_sfG6OMCmyPY1a9zS8tTCzh_ 
 client.login(token)
-
 
 app.listen(port, () => {
     console.log(`app listening on port ${port}`)
