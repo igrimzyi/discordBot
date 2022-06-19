@@ -49,10 +49,12 @@ client.on('messageCreate', async messageCreate =>{
     const randomXp = Math.floor(Math.random()* 9)+ 1 ;
 
     const hasLeveledUp = await levels.appendXp(messageCreate.author.id, messageCreate.guild.id, randomXp);
+
     if (hasLeveledUp){
         const user = await levels.fetch(messageCreate.author.id, messageCreate.guild.id);
         messageCreate.channel.send(`You leveled up to level ${user.level}! Keep it going!`);
     }
+    
     if (messageCreate.content === `${PREFIX}${rankID}`){
         const user = await levels.fetch(messageCreate.author.id, messageCreate.guild.id);
         const message = new MessageEmbed()
