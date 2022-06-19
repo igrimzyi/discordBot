@@ -55,7 +55,11 @@ client.on('messageCreate', async messageCreate =>{
     }
     if (messageCreate.content === `${PREFIX}${rankID}`){
         const user = await levels.fetch(messageCreate.author.id, messageCreate.guild.id);
-        messageCreate.channel.send(`You are currently level **${user.level}**!`)
+        const message = new MessageEmbed()
+        .setColor('#304281')
+        .setTitle(`You are currently level **${user.level}**!`)
+        .setImage(messageCreate.author.displayAvatarURL())
+        messageCreate.channel.send({embeds: [message]})
     }
 })
 
