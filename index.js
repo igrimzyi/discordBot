@@ -103,10 +103,6 @@ client.on('messageCreate', async messageCreate =>{
             .setDescription(`r/${result[0].subreddit}`)
             console.log(message)
             messageCreate.channel.send({embeds: [message]})
-            // if(result[0].title){
-            //     messageCreate.channel.send(result[0].title)
-            // }
-            // messageCreate.channel.send({files:[{attachment:result[0].image}]})
         });
     }
 
